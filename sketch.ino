@@ -25,17 +25,32 @@ void loop() {
 
   float temperatura = dht.readTemperature();
   float umidade = dht.readHumidity();
-
+  float ultimaTemp = -1000;
+  float ultimaUmid = -1000;
+  
+  
   if (isnan(temperatura) || isnan(umidade)) {
     lcd.print("Erro ao ler o DHT22!");
     return;
   }
+if (temperatura != ultimaTemp || umidade != ultimaUmid) {
 
-  lcd.print("Temp: ");
-  lcd.print(temperatura);
-  lcd.print(" °C  |  Umidade: ");
-  lcd.print(umidade);
-  lcd.print(" %");
+    lcd.clear();
+
+    lcd.setCursor(0, 0);
+    lcd.print("Temp: ");
+    lcd.print(temperatura);
+    lcd.print(" C");
+
+    lcd.setCursor(0, 1);
+    lcd.print("Umid: ");
+    lcd.print(umidade);
+    lcd.print(" %");
+
+    // Atualiza os valores anteriores
+    ultimaTemp = temperatura;
+    ultimaUmid = umidade;
 
   delay(2000);
+}
 }
